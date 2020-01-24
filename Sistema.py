@@ -70,6 +70,25 @@ def cadastrarProdutos():
     except:
         print('Print erro na inserção dos produtos')
 
+def listarProdutos():
+    produtos = []
+
+    try:
+        with conexao.cursor() as cursor:
+            cursor.execute("SELECT * FROM produtos")
+            produtosCadastrados = cursor.fetchall()
+    except:
+        print('erro ao conectao ao banco')
+
+    for i in produtosCadastrados:
+        produtos.append(i)
+
+    if len(produtos) != 0:
+        for i in range(0, len(produtos)):
+            print(produtos[i])
+    else:
+        print('nenhum produto cadastrado')
+
 while not autentico:
     decisao = int(input('Digite 1 para logar e 2 para cadastrar: '))
 
@@ -88,4 +107,10 @@ if autentico == True:
     decisaoUsuario = 1
 
     while decisaoUsuario != 0:
-        decisaoUsuario = int(input('Digite 0 para sair 1 para cadastrar produtos'))
+        decisaoUsuario = int(input('Digite 0 para sair 1 para cadastrar produtos 2 para listar produtos cadastrados'))
+
+        if decisaoUsuario == 1:
+            cadastrarProdutos()
+        elif decisaoUsuario == 2:
+            listarProdutos()
+
