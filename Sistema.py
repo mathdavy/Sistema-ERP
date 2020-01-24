@@ -89,6 +89,17 @@ def listarProdutos():
     else:
         print('nenhum produto cadastrado')
 
+def excluirProdutos():
+    idDeletar = int(input('Digite o id do produto: '))
+
+    try:
+        with conexao.cursor() as cursor:
+            cursor.execute('DELETE FROM produtos WHERE id = {}'.format(idDeletar))
+            print('Produto excluido com sucesso.')
+    except:
+        print('Falha ao deletar produto')
+
+
 while not autentico:
     decisao = int(input('Digite 1 para logar e 2 para cadastrar: '))
 
@@ -107,10 +118,16 @@ if autentico == True:
     decisaoUsuario = 1
 
     while decisaoUsuario != 0:
-        decisaoUsuario = int(input('Digite 0 para sair 1 para cadastrar produtos 2 para listar produtos cadastrados'))
+        decisaoUsuario = int(input('Digite 0 para sair 1 para cadastrar produtos 2 para listar produtos cadastrado'))
 
         if decisaoUsuario == 1:
             cadastrarProdutos()
         elif decisaoUsuario == 2:
             listarProdutos()
+
+            delete = int(input('digite 1 para excluir produto 2 para sair'))
+
+            if delete == 1:
+                excluirProdutos()
+
 
